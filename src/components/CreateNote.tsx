@@ -11,15 +11,18 @@ function CreateNote(props: Props) {
 
     const titleRef = useRef<HTMLInputElement>(null);
     const contentRef = useRef<HTMLTextAreaElement>(null);
+    const userRef = useRef<HTMLInputElement>(null);
     const categoriesRef = useRef<HTMLInputElement>(null);
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        const title = titleRef.current!.value;
-        const content = contentRef.current!.value;
-        const categoriesInput = categoriesRef.current!.value;
+        const title = titleRef.current?.value;
+        const content = contentRef.current?.value;
+        const user = userRef.current?.value; 
+        const date = new Date(); // Aktuelles Datum
+        const categoriesInput = categoriesRef.current?.value;
 
-        if (!title || !content || !categoriesInput) return;
+        if (!title || !content || !user || !categoriesInput ) return;
 
         const id = props.notes.length + 1;
         const categories = categoriesInput.split(',').map(category => category.trim())
@@ -27,10 +30,17 @@ function CreateNote(props: Props) {
         props.addNote({
             title,
             content,
+            user,
+            date,
             categories,
             id
-        })
-
+        });
+        
+        // Formular nach dem Absenden zurücksetzen
+        titleRef.current!.value = "";
+        contentRef.current!.value = "";
+        userRef.current!.value = "";
+        categoriesRef.current!.value = "";
     };
 
     return (
@@ -47,6 +57,10 @@ function CreateNote(props: Props) {
                         <Form.Control as="textarea" placeholder="Gebe die Notiz ein" rows={5} ref={contentRef} />
                     </Form.Group>
                     <Form.Group className="mb-3">
+                        <Form.Label>User</Form.Label>
+                        <Form.Control type="text" placeholder="Gebe den User ein" ref={userRef} />
+                    </Form.Group>
+                    <Form.Group className="mb-3">
                         <Form.Label>Kategorien</Form.Label>
                         <Form.Control type="text" placeholder="Gebe die Kategorien ein" ref={categoriesRef} />
                     </Form.Group>
@@ -54,8 +68,7 @@ function CreateNote(props: Props) {
                 </Form>
             </Card.Body>
         </Card>
-      );
-
+    );
 }
 
 export default CreateNote;

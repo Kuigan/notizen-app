@@ -20,6 +20,8 @@ function NotesList(props: Props){
                         id={note.id}
                         title={note.title}
                         categories={note.categories}
+                        user={note.user}
+                        date={note.date}
                         content={note.content} />
 
                     </Col>

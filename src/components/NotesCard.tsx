@@ -11,17 +11,27 @@ function NotesCard(props: Props) {
   const categories = props.categories.map(c => '#' + c).join(' ')
 
   return (
-    <Card style={{ width: '' }} className='mb-1'>
+    <Card className='mb-1'>
       <Card.Body>
         <Card.Title>{props.title}</Card.Title>
         <Card.Text>
           {props.content}
         </Card.Text>
+
+        <Card.Text>
+        {props.user}          
+        </Card.Text>
+
+        <Card.Text>
+        {props.date.toLocaleString()}          
+        </Card.Text>
+
         <Card.Subtitle className="mb-2 text-muted">{
           categories
         }</Card.Subtitle>
-         <Button variant="outline-success" size="sm" >Bearbeiten</Button>{' '}
-         <Button variant="outline-danger" size="sm">Löschen</Button>{' '}
+
+         <Button variant="outline-success" size="sm" >Bearbeiten</Button>
+         <Button variant="outline-danger" size="sm">Löschen</Button>
       </Card.Body>
     </Card>
   )
