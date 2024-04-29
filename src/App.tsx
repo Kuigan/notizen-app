@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import { Col, Container, Row } from 'react-bootstrap';
 import './App.css';
+import CreateNotes from './components/CreateNote';
+import Header from './components/Header';
+import NotesList from './components/NotesList';
+import { notesData } from './data/notes.data'
+import CreateNote from './components/CreateNote';
+import { Note } from './types/notes.type';
+import { useState } from 'react';
 
-function App() {
+export default function App() {
+
+  const [ notes, setNotes ] = useState<Note[]>(notesData)
+
+
+  function addNote(note: Note): void {
+    setNotes([...notes, note]);
+  }
+
+  // Die App gibt das Grundgerüst der Anwendung vor
+  // Hier werden wir später viele Informationen speichern und an Komponenten weitergeben
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+    <Header />
+    <Container>
+      <Row>
+      <Col md={4}>
+        <CreateNote notes = {notes} addNote = {addNote} />
+        </Col>
+        <Col>
+        <NotesList notes = {notes} setNotes={setNotes}/>
+        </Col>
+    </Row>
+    </Container>
+    </>
+  )
 }
-
-export default App;
